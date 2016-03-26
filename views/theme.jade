@@ -1,8 +1,32 @@
 extends layout
 block content
   body(role='document')
-    nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
+    .container
+      .page-header
+        h1 Boostrap gird examples
+        p.lead
+          |Basic grid layouts to get you familiar with building within the Bootstrap grid system.
+
+        .row
+          .col-md-4 .col-md-4
+          .col-md-4 .col-md-4
+          .col-md-4 .col-md-4
+
+        .row
+          .col-md-3 .col-md-3
+          .col-md-6 .col-md-6
+          .col-md-3 .col-md-3
+
+        hr
+
+        .row
+          .col-md-8 .col-md-8
+            .row
+              .col-md-6 .col-md-6
+              .col-md-6 .col-md-6
+          .col-md-4 .col-md-4
+
+      nav.navbar.navbar-inverse
         .navbar-header
           button.navbar-toggle.collapsed(type='button',data-toggle='collapse',data-target='#navbar',aria-expanded='false',aria-controls='navbar')
             span.sr-only Toggle navigation
@@ -39,6 +63,7 @@ block content
         h1 Theme example
           p.
             This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.
+
       .page-header
         h1 Buttons
       p
@@ -46,6 +71,120 @@ block content
         button.btn.btn-lg.btn-primary(type='button') Primary
         button.btn.btn-lg.btn-success(type='button') Success
         button.btn.btn-lg.btn-info(type='button') Info
+
+      .page-header
+        h1 Tables
+
+      .row
+        .col-md-6
+          table.table
+            thead
+              tr
+                th Date
+                th Description
+                th Money
+                th Category 1
+                th Category 2
+            tbody
+              tr
+                td 2/1/2016
+                td Z's cream
+                td $10.00
+                td food
+                td coffee and tea
+              tr
+                td 3/25/2016
+                td Costco
+                td $51.35
+                td food
+                td grocery
+              tr
+                td 1/23/2016
+                td Disney tickets
+                td $356.00
+                td Travel
+                td
+        .col-md-6
+          table.table.table-striped
+            thead
+              tr
+                th Date
+                th Description
+                th Money
+                th Category 1
+                th Category 2
+            tbody
+              tr
+                td 2/1/2016
+                td Z's cream
+                td $10.00
+                td food
+                td coffee and tea
+              tr
+                td 3/25/2016
+                td Costco
+                td $51.35
+                td food
+                td grocery
+              tr
+                td 1/23/2016
+                td Disney tickets
+                td $356.00
+                td Travel
+                td
+
+      .page-header
+        h1 Labels
+      .h1
+        .span.label.label-default Default
+        .span.label.label-primary Primary
+        .span.label.label-success Success
+        .span.label.label-info Info
+        .span.label.label-warning Warning
+        .span.label.label-danger Danger
+
+      .page-header
+        h1 Alerts
+      .alert.alert-danger(role='alert')
+        <strong> Oh snap! </strong>
+        | the input is incorrect
+
+      .page-header
+        h1 Progress bars
+      .progress
+        .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width:60%;')
+          span.sr-only 40% Complete (success)
+      .row
+        .col-lg-6
+          .progress
+            .progress-bar.progress-bar-striped(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style='width:10%;')
+
+      .page-header
+        h1 Panels
+      .row
+        .col-sm-4
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title Panel title
+            .panel-body
+              | Panel content
+          .panel.panel-primary
+            .panel-heading
+              h3.panel-title Panel title
+            .panel-body
+              | Panel content
+        .col-sm-4
+          .panel.panel-success
+            .panel-heading
+              h3.panel-title Panel title
+            .panel-body
+              | Panel content
+          .panel.panel-info
+            .panel-heading
+              h3.panel-title Panel title
+            .panel-body
+              | Panel content
+
 
       .page-header
         h1 Carousel
@@ -56,11 +195,11 @@ block content
           li(data-target='#carousel-example-generic', data-slide-to='2')
         .carousel-inner(role='listbox')
           .item.active
-            img(src='http://placehold.it/1200x315',alt='first slide: i am very long to see my moving')
+            img(src='/images/1.jpeg',alt='first slide: i am very long to see my moving')
           .item
-            img(data-src='/images/2.jpg',alt='second slide: i am very long to see my moving')
+            img(src='/images/2.jpg',alt='second slide: i am very long to see my moving')
           .item
-            img(data-src='/images/3.png',alt='third slide: i am very long to see my moving')
+            img(src='/images/3.png',alt='third slide: i am very long to see my moving')
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
           span.sr-only Previous
