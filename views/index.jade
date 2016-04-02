@@ -10,19 +10,18 @@ block content
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='#Top')
+        a.page-scroll.navbar-brand(href='#Top')
           i.ion-coffee SCYing
       #bs-navbar.navbar-collapse.collapse
         ul.nav.navbar-nav
-          li: a(href='#AboutMe') About Me
-          li: a(href='#Projects') Projects
-          li: a(href='#Things') Things I use
+          li: a.page-scroll(href='#AboutMe') About Me
+          li: a.page-scroll(href='#Projects') Projects
+          li: a.page-scroll(href='#Things') Things I use
 
   header#Top.text-center
     .header-content
       h1 Hello Javascript!
       h4 Join the world of javascript open-source projects!
-      p#target1 I am target1
 
   section#AboutMe.container-fluid.text-center
     .row
@@ -30,56 +29,56 @@ block content
         h1.text-primary Hi I am Shih-Chun Yin
         br
         p.text-faded
-          | I am currently working as full-time Software Engineer at TATA Consultancy Services.
+          | I am currently working as full-time Software Engineer at TATA Consultancy Services. Node.js was firstly introduced by my friend, Jerry. After that, I can't stop myself from exploring this whole new world. npm.js, expressjs, MEAN stack, React.js AND MORE!. Javascript is so powerful that it empower every piece of web development right now. Therefore, I start my journey.
 
   section#Projects.container-fluid
+    h1.text-center.text-primary Projects
     .row
-      .col-xs-10.col-xs-offset-1.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-        //http://getbootstrap.com/css/#helper-classes
-        h1.text-center.text-primary Projects
-        //http://getbootstrap.com/components/#media
-        .media.wow.fadeInRight
-          h3 Project 1
-          .media-body.media-middle 
+      //http://getbootstrap.com/css/#helper-classes
+      //http://getbootstrap.com/components/#media
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
+        #project1.media.wow
+          .media-body 
+            h3 Project 1
             p
               |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          .media-right
+          .media-right.media-middle
             a(href='#')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 1 pic')
-
-        .media.wow.fadeInLeft
-          h3 Project 2
-          .media-left
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
+        #project2.media.wow
+          .media-left.media-middle
             a(href='#')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 2 pic')
-          .media-body.media-middle
+          .media-body(style='text-align:right;')
+            h3 Project 2
             p
               |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-        .media.wow.fadeInRight
-          h3.media-heading Project 3
-          .media-body.media-middle
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
+        #project3.media.wow
+          .media-body
+            h3 Project 3
             p
               |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          .media-right
+          .media-right.media-middle
             a(href='#')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 3 pic')
-
-        .media.wow.fadeInLeft
-          h3 Project 4
-          .media-left
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
+        #project4.media.wow
+          .media-left.media-middle
             a(href='#')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 4 pic')
-          .media-body.media-middle
+          .media-body(style='text-align:right;')
+            h3 Project 4
             p
               |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-        .media.wow.fadeInRight
-          h3 Project 5
-          .media-body.media-middle
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
+        #project5.media.wow
+          .media-body
+            h3 Project 5
             p
               |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          .media-right
+          .media-right.media-middle
             a(href='#')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 5 pic')
 
@@ -107,7 +106,7 @@ block content
             p JavaScript
 
   section#Contact.container-fluid.text-center
-    h1.wow.fadeIn Follow me at below
+    h1.wow.animated.bounceInDown Follow me at below
     ul.list-inline
       //http://www.w3schools.com/tags/att_a_rel.asp
       li: a(rel='nofollow',href='https://github.com/paulyin2001',target='_blank',title='GitHub')
