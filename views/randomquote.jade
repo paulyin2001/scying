@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/randomquote.css')
+  script(src='/javascripts/randomquote.js')
+  style.
+    button {
+      background-color: transparent;
+      border: none;
+      transition-duration: 0.5s;
+      font-size: 20px;
+    }
+    h1 {
+      font-size: 50px;
+    }
+    a:visited{
+      color: white;
+    }
+    a:hover,
+    button:hover{
+      background-color: #435294;
+      color: #DFF99A;
+      border: none;
+    }
+  header.text-center
+    .header-content
+      h1#quote The quote will be here!
+    .quoteBot
+      button#newQuote
+        .ion-android-arrow-dropright-circle  give me new quote
+      br
+      br
+      button(style="font-size:50px;width:75px;border-radius:50%;", title="share on twitter")
+        a#tweet(href="https://twitter.com/intent/tweet",target="_blank")
+          .ion-social-twitter-outline

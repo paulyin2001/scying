@@ -26,7 +26,7 @@ $(document).ready(function() {
   $('#Things .col-sm-2:nth-child(2)').addClass('animated infinite swing');
   $('#Things .col-sm-2:nth-child(3)').addClass('animated infinite jello');
   $('#Things .col-sm-2:nth-child(4)').addClass('animated infinite tada');
-  $('#Things .col-sm-2:nth-child(5)').addClass('animated infinite wobble');
+  $('#Things .col-sm-2:nth-child(5)').addClass('animated infinite flash');
   $('a.page-scroll').on('click',function(event){
   	var ele = $(this);
   	$('html, body').animate({

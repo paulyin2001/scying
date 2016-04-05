@@ -1,0 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:200);
+@import url(//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css);
+/* header */
+html,body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Raleway';
+}
+header {
+    position: relative;
+    min-height: 100%;
+    color: white;
+    width: 100%;
+    background-image: url('/images/stars.jpg');
+    background-position: center;
+    background-size: cover;
+}
+header .header-content {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    bottom: 40%;
+}
+.quoteBot {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    top: 60%;
+}
