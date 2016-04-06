@@ -40,11 +40,11 @@ block content
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
         #project1.media.wow
           .media-body 
-            h3 Project 1
+            h3 Random Quotes Machine
             p
-              |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              |The app will generate random quotes and the quote can be shared via twitter. I created my own RESTful API with Express to serve quotes. The hardest bug I found is that getJSON can't pick up API after I deployed onto Heroku. The error is 'No Access-Control-Allow-Origin' where the websites should be the same origin. Then, I spend a day to understand http header, same-origin policy and Expressjs to set up API response header to resolve the issue.
           .media-right.media-middle
-            a(href='#')
+            a(href='/randomquote')
               img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 1 pic')
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
         #project2.media.wow
