@@ -9,6 +9,8 @@ module.exports.quotesAll = function(req,res){
 			res.json(err);
 		}
 		res.status(200);
+		res.header('Access-Control-Allow-Origin', '*');	//to resolve No 'Access-Control-Allow-Origin' error
+		console.log('set header');
 		res.json(returnQuotes);
 	});
 };
@@ -43,10 +45,4 @@ module.exports.quoteCreate = function(req,res){
 	// 		sendJsonResponse(res,201,location);
 	// 	}
 	// });	//validation will be done in schema
-};
-
-
-var sendJsonResponse = function(res, status, content){
-	res.status(status);		//send response status code
-	res.json(content);		//send response JSON data
 };
