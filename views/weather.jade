@@ -1,0 +1,153 @@
+extends layout
+
+block content
+  style.
+    body {
+      background-color: #282E78;
+      font-size: 50px;
+    }
+
+    canvas {
+      margin-left: 8px;
+      margin-top: 8px;
+    }
+
+    p{
+      color: white;
+    }
+    #Temp{
+      display:inline-block;
+      margin-right: 10px;
+    }
+    #chgTemp{
+      display:inline-block;
+    }
+    a:hover, a:active {
+      text-decoration: none;
+    }
+  .container.fliud.text-center
+    .row
+      .col-md-6.col-md-offset-3.col-sm-8.col-sm-2
+        canvas#skycon
+        p#City
+        p#Weather
+        p#Temp hi
+        a#chgTemp &deg;C
+        p#Humidity
+        p#Cloud
+
+  script(src="javascripts/skycons.js")
+  script.
+    'use strict'
+    var iconColor = '{"color": "white"}';
+    var icons = new Skycons(JSON.parse(iconColor)),
+        list  = [
+          "clear-day", "clear-night", "partly-cloudy-day",
+          "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+          "fog"
+        ],
+        i;
+    icons.play();
+
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(function(position){
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?lat='+
+        lat+'&lon='+lon+'&appid=ac7ca9ef5fd87e798686fc04633afbb4&units=metric';
+        $.getJSON(weatherUrl,function(json){
+          $('#City').text(json.name+", "+json.sys.country);
+          $('#Weather').text(json.weather[0].description);
+          $('#Temp').text(json.main.temp);
+          $('#Humidity').text("Humidity: "+json.main.humidity+"%");
+          $('#Cloud').text("Cloud: "+json.clouds.all+"%");
+          //getJSON already parse JSON, so don't need JSON.parse
+          console.log("lon: "+json.coord.lon);
+          console.log("lat: "+json.coord.lat);
+          console.log("Weather: "+json.weather[0].main);
+          console.log("Temp: "+json.main.temp+"C");
+          console.log("Humidity: "+json.main.humidity+"%");
+          console.log("Cloud: "+json.clouds.all+"%");
+          console.log("City: "+json.name);
+          console.log("id start with: "+(json.weather[0].id/100));
+          var weatherId = json.weather[0].id;
+          var weatherIdStart = weatherId/100;
+          var d = new Date();
+          var h = d.getHours();
+          switch(weatherIdStart){
+            case 3:
+              icons.set("skycon",list[5]);
+              break;
+            case 2:
+            case 5:
+              icons.set("skycon",list[6]);
+              break;
+            case 6:
+              icons.set("skycon",list[7]);
+              break;
+            case 7:
+              icons.set("skycon",list[9]);
+              break;
+            case 8:
+              switch(weatherId%800){
+                case 0:
+                  if(h >= 19 || h <= 7)
+                    icons.set("skycon",list[1]);
+                  else
+                    icons.set("skycon",list[0]);
+                  break;
+                case 1:
+                case 2:
+                  if(h >= 19 || h <= 7)
+                    icons.set("skycon",list[3]);
+                  else
+                    icons.set("skycon",list[2]);
+                  break;
+                case 3:
+                case 4:
+                  icons.set("skycon",list[4]);
+                  break;
+                default:
+                  icons.set("skycon",list[0]);
+              }
+              break;
+            case 9:
+              icons.set("skycon",list[8]);
+              break;
+            default:
+              icons.set("skycon",list[0]);
+          }
+          //below interator is used for debugging
+          var html="";
+          $.each(json, function(i,field){
+            html += ("i: "+ i + ", field:"+ field +"\n");
+            if(typeof field === 'object'){
+              $.each(field, function(i2,field2){
+                html+=("\ti2: "+i2+", field2:"+field2+"\n");
+                if(typeof field2 === 'object'){
+                  $.each(field2, function(i3, field3){
+                    html+=("\t\ti3: "+i3+", field3:"+field3+"\n");
+                  });
+                }
+              });
+            }
+          });
+          console.log(html);
+        });
+      });
+    } else {
+      $('City').text("Geolocation is not supported by this browser.");
+    }
+
+    $('#chgTemp').click(function(){
+      var temp = $('#Temp').text();
+      var degree = $('#chgTemp').html();
+      if(degree.slice(-1) === 'C'){
+        temp = ((temp*9/5) + 32).toFixed(1);
+        $('#chgTemp').html('&deg;F');
+      } else {
+        temp = ((temp - 32)*5/9).toFixed(1);
+        $('#chgTemp').html('&deg;C');
+      }
+      $('#Temp').text(temp);
+    });
