@@ -1,0 +1,150 @@
+extends layout
+
+block content
+  style.
+    body {
+      
+    }
+    .table tbody>tr>td{
+      vertical-align: middle;
+    }
+    .table tbody>tr>td:first-child,
+    .table tbody>tr>td:nth-child(2){
+      width: 166px;
+    }
+    .media-object{
+      height: 150px;
+      width: 150px;
+    }
+    button{
+      float:right;
+      width: 80px;
+      margin-left:10px;
+    }
+    .clickable-row{
+      cursor: pointer;
+    }
+    
+  .container
+    h1 Twitch Tv Streamer
+      button#offline.btn.btn-warning Offline
+      button#online.btn.btn-info Online                
+      button#all.btn.btn-default All
+    table.table.text-center.table-hover
+      
+  script.
+    'use strict'
+    $(document).ready(function(){
+      $('.clickable-row').click(function(){ 
+        //clickable-row need to be here after the table is set up
+        //http://stackoverflow.com/questions/17147821/how-to-make-a-whole-row-in-a-table-clickable-as-a-link
+        window.open($(this).data("href"), '_blank');
+        //http://stackoverflow.com/questions/19851782/how-to-open-a-url-in-a-new-tab-using-javascript-or-jquery
+      });
+    });
+    $('#all').click(function(){
+      $('tr').show();
+    });
+    $('#online').click(function(){
+      $('tr:not(:has(th))').hide(); //hide all tr except tr that has th
+      $('.info').show();
+    });
+    $('#offline').click(function(){
+      $('tr:not(:has(th))').hide();
+      $('.warning').show();
+    });
+    var twitchBaseApi = 'https://api.twitch.tv/kraken';
+    //if stream is null, it means offline
+    var dinter = 'dinterlolz';
+    var fcc = 'freecodecamp';
+    var tonegod = 'asiagodtonegg3be0';
+    var arrAccount = ['dinterlolz','freecodecamp','asiagodtonegg3be0',
+    'towelliee','esl_sc2','brunofin','comster404', "storbeck", "terakilobyte",
+    "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
+    //arrAccount = ['dinterlolz','esl_sc2','comster404'];
+    var ch = '/channels/';
+    var st = '/streams/';
+    //var cb = '&callback=?'; don't need callback
+    arrAccount.forEach(function(account){
+      addTbRow(account);
+      getChannel(account,twitchBaseApi+ch);
+      getStream(account,twitchBaseApi+st);
+    });
+    //sortTable();
+    
+    function addTbRow(id){
+      var trS = '<tr id="'+id+'" class="clickable-row" data-href="">';
+      var td1 = '<td><img class="media-object" src=""></td>';
+      var td23trE = '<td></td><td></td></tr>';
+      $('table').append(trS+td1+td23trE);
+    }
+    function getChannel(account,api){
+      var jQSlct = '#'+account;
+      $.getJSON(api+account, function(json){
+        //- console.log('Account: '+json.display_name);
+        //- console.log('img link: '+json.logo);
+        //- console.log('Stream link: '+json.url);
+        //var jQSlct = '#'+account;
+        $(jQSlct).attr('data-href', json.url);
+        if(json.logo === null)
+          $(jQSlct+' td:nth-child(1) img').attr('src', '/images/Twitch_square.png');
+        else
+          $(jQSlct+' td:nth-child(1) img').attr('src', json.logo);
+        $(jQSlct+' td:nth-child(2)').html(json.display_name);
+      })
+      .fail(function(jqxhr, textStatus, error){
+        //http://api.jquery.com/jquery.getjson/
+        var err = textStatus+', '+error;
+        console.log('Request failed: '+err);
+        $(jQSlct).attr('data-href', 'https://www.twitch.tv/'+account);
+        $(jQSlct+' td:nth-child(1) img').attr('src', '/images/Twitch_square.png');
+        $(jQSlct+' td:nth-child(2)').html(account);
+      });
+    }
+
+    function getStream(account,api){
+      var jQSlct = '#'+account;
+      $.getJSON(api+account, function(json){
+        //console.log(json.stream === null);
+        if(json.stream === null){  //offline
+          //streamer is not streaming
+          $(jQSlct + ' td:nth-child(3)').text('offline');
+          $(jQSlct).addClass('warning');
+          $(jQSlct).attr('priority', '2');
+          sortTable();
+        } else {                          //online
+          //get streaming info
+          //http://www.mkyong.com/javascript/how-to-access-json-object-in-javascript/
+          var game = json.stream['game'];
+          var status = json.stream.channel['status'];
+          $(jQSlct + ' td:nth-child(3)').text(game+': '+status);
+          $(jQSlct).addClass('info');
+          $(jQSlct).attr('priority', '1');
+          sortTable();
+        }
+      })
+      .fail(function(jqxhr, textStatus, error){
+        var err = textStatus+', '+error;
+        console.log('Request failed: '+err);
+        $(jQSlct + ' td:nth-child(3)').text('account not exist');
+        $(jQSlct).addClass('danger');
+        $(jQSlct).attr('priority', '3');
+        sortTable();
+      });
+    }
+
+    //http://stackoverflow.com/questions/3156851/using-jquery-how-do-you-reorder-rows-in-a-table-based-on-a-tr-attribute
+    function sortTable(){
+      var rows = $('table').find('tr').get();
+      rows.sort(function(a,b){
+        var keyA = $(a).attr('priority');
+        var keyB = $(b).attr('priority');
+        console.log('a: '+keyA+', b: '+keyB);
+        if(keyA > keyB) return 1;
+        if(keyA < keyB) return -1;
+        return 0;
+      });
+      $.each(rows, function(index, row) {
+        $('table').children('tbody').append(row);
+      });
+    }

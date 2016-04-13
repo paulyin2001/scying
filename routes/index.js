@@ -5,14 +5,25 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'SCYing' });
 });
-/* GET random quote app. */
+
 router.get('/randomquote', function(req, res, next) {
   res.render('randomquote', { title: 'Random Quotes' });
 });
-/* GET random quote app. */
+
 router.get('/weather', function(req, res, next) {
   res.render('weather', { title: 'Weather' });
 });
 
+router.get('/wikisearch', function(req, res, next) {
+  res.render('wikisearch', { title: 'Wikipedia Search' });
+});
+
+router.get('/money', function(req, res, next) {
+  res.render('money', { title: 'Money' });
+});
+
+router.get('/twitchtv', function(req, res, next) {
+  res.render('twitchtvapi', { title: 'Twitch list' });
+});
 
 module.exports = router;

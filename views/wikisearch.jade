@@ -1,0 +1,83 @@
+extends layout
+
+block content
+  //https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&formatversion=2&srsearch=president&srnamespace=0
+  //https://en.wikipedia.org/w/api.php?action=query&format=json&titles=President&formatversion=2
+  style.
+    body {
+      background-color: #282E78;
+    }
+    a{
+      margin-top: 50%;
+      position: relative;
+      cursor:pointer;
+      color: white;
+    }
+    a:hover, a:active{
+      text-decoration: none;
+      color: #DCCECE;
+    }
+    input{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    #list{
+      visibility: hidden;
+      color: white;
+    }
+    .searchmatch{
+      font-weight: bold;
+    }
+  .container-fliud
+    .row
+      .col-md-6.col-md-offset-3.col-xs-8.col-xs-offset-2.text-center
+        a.btn.btn-default(href="http://en.wikipedia.org/wiki/Special:Random",target="_blank") Get a random wiki page
+    .row
+      .col-md-4.col-md-offset-4.col-xs-6.col-xs-offset-3
+        input.form-control(placeholder="Or, search the article you want ...")
+    #list.row
+      .col-md-8.col-md-offset-2.col-xs-10.col-xs-offset-1
+        ul
+        
+
+  script.
+    'use strict'
+    $('input').keypress(function(e){
+      var key = e.which;
+      var input = $('input').val();
+      if(key == 13 && input !== ''){
+        $('a').remove('.wiki');
+        var cb = '&callback=?'
+        var wikiApi = 'https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&formatversion=2&srsearch='+input+'&srnamespace=0'+cb;
+        //resolve CROS erro with JSONP
+        //reference: http://stackoverflow.com/questions/3873636/no-response-from-mediawiki-api-using-jquery
+        $.getJSON(wikiApi, function(json){
+          console.log(json.query.search.length);
+          var len = json.query.search.length;
+          for(var key in json.query.search){
+            if(!json.query.search.hasOwnProperty(key)) continue;
+            var obj = json.query.search[key];
+            var head, body;
+            for(var prop in obj){
+              if(!obj.hasOwnProperty(prop)) continue;
+              //console.log(prop + " = "+obj[prop]);
+              if(prop === 'title'){
+                head = obj[prop];
+              } else if (prop === 'snippet'){
+                body = obj[prop];
+              }
+            }
+            appendText(head,body);
+          }
+        });
+        $('#list').css("visibility", "visible");
+        $('a').css("margin-top","10%");
+      }
+    });
+
+    function appendText(head, body){
+      //console.log(head.replace(/ /g,"_"));
+      var url = 'https://en.wikipedia.org/wiki/'+head.replace(/ /g,"_");
+      $('ul').append('<a class="wiki" href="'+url+'" target="_blank"><li><h3>'+
+      head+'</h3><p>'+body+'</p></li></a>');
+    }

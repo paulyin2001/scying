@@ -1,0 +1,355 @@
+extends layout
+
+block content
+  style.
+    body {
+      
+    }
+  .container.fliud
+    .row
+      .col-md-3
+        .form-group
+          label Start Date
+          input.form-control(type='date',id='startDate')
+        .form-group
+          label End Date
+          input.form-control(type='date',id='endDate')
+        button#filter.btn.btn-default filter
+      .col-md-6
+        table#trans.table.table-hover.table-striped
+          tr
+            th Trans Date
+            th Description
+            th Amount
+            th Total
+          tr
+            td 04/07/2016
+            td KOKO Bakery
+            td 20.03
+            td
+          tr
+            td 04/07/2016
+            td Progressive Insurance
+            td 72.55
+            td
+          tr
+            td 04/03/2016
+            td Market District
+            td 52.21
+            td
+          tr
+            td 04/03/2016
+            td Amazon
+            td 31.11
+            td
+          tr
+            td 04/01/2016
+            td Sephora
+            td 51.84
+            td
+          tr
+            td 04/01/2016
+            td Phusion Cafe
+            td 40.00
+            td
+          tr
+            td 03/28/2016
+            td Market District
+            td 48.65
+            td
+          tr
+            td 03/28/2016
+            td Google Project Fi
+            td 33.39
+            td
+          tr
+            td 03/26/2016
+            td Asian Express
+            td 6.47
+            td
+          tr
+            td 03/25/2016
+            td Sky Salon
+            td 40.00
+            td
+          tr
+            td 03/25/2016
+            td Sweet Mango
+            td 24.00
+            td
+          tr
+            td 03/25/2016
+            td Market District
+            td 16.98
+            td
+          tr
+            td 03/23/2016
+            td Payment
+            td -792.56
+            td
+          tr
+            td 03/22/2016
+            td TWC
+            td 94.76
+            td
+          tr
+            td 03/22/2016
+            td Subway
+            td 10.55
+            td
+          tr
+            td 03/22/2016
+            td Classic Mazda
+            td 526.01
+            td
+          tr
+            td 03/19/2016
+            td Noodlecat
+            td 30.00
+            td
+          tr
+            td 03/19/2016
+            td See's Candies
+            td 9.30
+            td
+          tr
+            td 03/19/2016
+            td Rising Stars
+            td 9.83
+            td
+          tr
+            td 03/15/2016
+            td Michael Angelos Bakery
+            td 15.35
+            td
+          tr
+            td 03/15/2016
+            td Google Devices
+            td 265.81
+            td
+          tr
+            td 03/15/2016
+            td Royalton Automotive
+            td 27.99
+            td
+          tr
+            td 03/14/2016
+            td Advanced Auto Parts
+            td 9.49
+            td
+          tr
+            td 03/14/2016
+            td Amazon
+            td 25.07
+            td
+          tr
+            td 03/12/2016
+            td SQ *The Pasta CO-OP
+            td 9.75
+            td
+          tr
+            td 03/11/2016
+            td Seoul Restaurant
+            td 30.00
+            td
+          tr
+            td 03/09/2016
+            td Asia Food Company
+            td 39.35
+            td
+          tr
+            td 03/08/2016
+            td Heinen's
+            td 10.58
+            td
+          tr
+            td 03/06/2016
+            td I-X center corp
+            td 7.75
+            td
+          tr
+            td 03/06/2016
+            td Ritos Italian Bakery
+            td 7.00
+            td
+          tr
+            td 03/06/2016
+            td Zs Cream Bean
+            td 8.71
+            td
+          tr
+            td 03/06/2016
+            td Cleveland Auto Show
+            td 24.00
+            td
+          tr
+            td 03/05/2016
+            td Feng Sushi
+            td 49.00
+            td
+          tr
+            td 03/05/2016
+            td Yankee Candles
+            td 38.07
+            td
+          tr
+            td 03/05/2016
+            td Coach
+            td 74.32
+            td
+          tr
+            td 03/03/2016
+            td Apple Itunes LINE
+            td 12.95
+            td
+          tr
+            td 03/02/2016
+            td Heinen's
+            td 28.81
+            td
+          tr
+            td 03/01/2016
+            td Amazon
+            td 59.43
+            td
+          tr
+            td 03/01/2016
+            td Payment
+            td -602.35
+            td
+          tr
+            td 02/28/2016
+            td Chipotle
+            td 6.50
+            td
+          tr
+            td 02/27/2016
+            td Park to Shop
+            td 44.66
+            td
+          tr
+            td 02/26/2016
+            td Nam Wah Berea
+            td 24.00
+            td
+          tr
+            td 02/25/2016
+            td Ulta
+            td 3.77
+            td
+          tr
+            td 02/25/2016
+            td Foreign Trans Fee
+            td 4.38
+            td
+          tr
+            td 02/23/2016
+            td Hilton Hotels
+            td 146.25
+            td
+          tr
+            td 02/23/2016
+            td Fuji Grill
+            td 43.00
+            td
+          tr
+            td 02/23/2016
+            td 7-Eleven
+            td 10.00
+            td
+          tr
+            td 02/20/2016
+            td Amazon
+            td 18.95
+            td
+          tr
+            td 02/18/2016
+            td Starbucks
+            td 4.15
+            td
+          tr
+            td 02/16/2016
+            td Mizu Sushi
+            td 37.00
+            td
+          tr
+            td 02/15/2016
+            td Amazon
+            td 28.70
+            td
+          tr
+            td 02/14/2016
+            td Crown of India
+            td 24.00
+            td
+          tr
+            td 02/13/2016
+            td Asian Express
+            td 8.63
+            td
+          tr
+            td 02/13/2016
+            td Famous Foot Wear
+            td 83.86
+            td
+          tr
+            td 02/13/2016
+            td Coach
+            td 74.54
+            td
+          tr
+            td 02/13/2016
+            td Sephora
+            td 39.96
+            td
+  script.
+    'use strict'
+    //getTotal('trans');
+    //dateRange('03/02/2016','03/31/2016','trans');
+    //getSpend('trans');
+    $('#filter').click(function(){
+      var start = $('#startDate').val();
+      var end = $('#endDate').val();
+      start = Date.parse(start);
+      end = Date.parse(end);
+      dateRange(start, end, 'trans');
+      getTotal('trans');
+    });
+    function getTotal(id){
+      var table = document.getElementById(id);
+      var total = 0;
+      for(var r=table.rows.length-1; r>0; r--){
+        if(table.rows[r].style.display !== 'none'){
+          total += parseFloat(table.rows[r].cells[2].innerHTML);
+          table.rows[r].cells[3].innerHTML = total.toFixed(2);
+        }
+      }
+    }
+    /* Parse start, end from string to date. Then, hide rows in id table */
+    function dateRange(start, end, id){
+      var startD = new Date(start);
+      var endD = new Date(end);
+      var table = document.getElementById(id);
+      var crtD;
+      for(var r=table.rows.length-1; r>0; r--){
+        crtD = new Date(table.rows[r].cells[0].innerHTML);
+        if( crtD < startD || endD < crtD){
+          table.rows[r].style.display = 'none';
+        }
+      }
+    }
+    function getSpend(id){
+      var table = document.getElementById(id);
+      var total = 0;
+      var amount = 0;
+      for(var r=table.rows.length-1; r>0; r--){
+        var amount = parseFloat(table.rows[r].cells[2].innerHTML);
+        if(amount < 0){
+          table.rows[r].style.display = 'none';
+        }
+        if(table.rows[r].style.display !== 'none'){
+          total += amount
+          table.rows[r].cells[3].innerHTML = total.toFixed(2);
+        }
+      }
+    }
