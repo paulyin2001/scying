@@ -26,4 +26,8 @@ router.get('/twitchtv', function(req, res, next) {
   res.render('twitchtvapi', { title: 'Twitch list' });
 });
 
+router.get('/calculator', function(req, res, next) {
+  res.render('calculator', { title: 'Calculator' });
+});
+
 module.exports = router;

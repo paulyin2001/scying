@@ -1,0 +1,161 @@
+extends layout
+
+block content
+  style.
+    body {
+      background: linear-gradient(to right,#B0D3B0, #B4B4FC);
+    }
+    .calculator{
+      margin: auto;
+      margin-top: 50px;
+      width: 300px;
+      border: 1px solid red;
+      border-radius: 25px;
+    }
+    button {
+      width: 70px;
+    }
+    p{
+      margin-left: 10px;
+    }
+    input{
+      width: 97%;
+      text-align: right;
+    }
+  .calculator
+    h1.text-center Calculator
+    p
+      input(type="text", readonly, value="")
+    p
+      button#parS.btn.btn-info (
+      button#parE.btn.btn-info )
+      button#ce.btn.btn-info CE
+      button#ac.btn.btn-info AC
+    p
+      button#7.btn.btn-info 7
+      button#8.btn.btn-info 8
+      button#9.btn.btn-info 9
+      button#divi.btn.btn-info &divide;
+    p
+      button#4.btn.btn-info 4
+      button#5.btn.btn-info 5
+      button#6.btn.btn-info 6
+      button#multi.btn.btn-info &times;
+    p
+      button#1.btn.btn-info 1
+      button#2.btn.btn-info 2
+      button#3.btn.btn-info 3
+      button#minus.btn.btn-info -
+    p
+      button#0.btn.btn-info 0
+      button#deci.btn.btn-info .
+      button#equal.btn.btn-info =
+      button#plus.btn.btn-info +
+        
+      
+  script.
+    'use strict'
+    $('#parS').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'(');
+    });
+    $('#parE').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+')');
+    });
+    $('#ce').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr.substring(0,crtStr.length-1));
+      //won't have index out of range error
+    });
+    $('#ac').click(function(){
+      $('input').val('');
+    });
+    $('#7').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'7');
+    });
+    $('#8').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'8');
+    });
+    $('#9').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'9');
+    });
+    $('#divi').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+' \xF7 ');
+      //http://www.javascripter.net/faq/mathsymbols.htm
+    });
+    $('#4').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'4');
+    });
+    $('#5').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'5');
+    });
+    $('#6').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'6');
+    });
+    $('#multi').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+' \xD7 ');
+    });
+    $('#1').click(function(){
+      //debugger;
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'1');
+    });
+    $('#2').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'2');
+    });
+    $('#3').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'3');
+    });
+    $('#minus').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+' - ');
+    });
+    $('#0').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'0');
+    });
+    $('#deci').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+'.');
+    });
+    //http://stackoverflow.com/questions/13077923/how-can-i-convert-a-string-into-a-math-operator-in-javascript
+    var math = {
+      '+': function(x,y) {return x+y},
+      '-': function(x,y) {return x-y},
+      '\xD7': function(x,y) {return x*y},
+      '\xF7': function(x,y) {return x/y}
+    };
+    $('#equal').click(function(){
+      var crtStr = $('input').val();
+      var arrExp = crtStr.split(' ');
+      var result = arrExp.reduce(function(pV,cV){
+        debugger;
+        var num = 0,sign;
+        console.log('pV: '+pV+', cV: '+cV);
+        if(!Array.isArray(pV)){
+          num = parseFloat(pV);
+          return [num, cV];
+        } else {
+          num = pV[0];
+          sign = pV[1];
+          return math[sign](num, parseFloat(cV));
+        }
+      });
+      $('input').val(result);
+    });
+    $('#plus').click(function(){
+      var crtStr = $('input').val();
+      $('input').val(crtStr+' + ');
+    });
+    
