@@ -30,4 +30,8 @@ router.get('/calculator', function(req, res, next) {
   res.render('calculator', { title: 'Calculator' });
 });
 
+router.get('/pomodoro', function(req, res, next) {
+  res.render('pomodoro', { title: 'Pomodoro Clock' });
+});
+
 module.exports = router;

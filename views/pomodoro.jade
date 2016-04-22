@@ -1,0 +1,193 @@
+extends layout
+
+block content
+  style.
+    @import url(https://fonts.googleapis.com/css?family=Raleway:200);
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css);
+    html {
+      min-height: 100%;
+      /*http://stackoverflow.com/questions/12444774/how-to-force-html-background-to-bottom-when-page-is-smaller-than-window*/
+    }
+    body {
+      min-height: 100%;
+      background: linear-gradient(to bottom right,#F80B1C, #F9BEDF);
+      background-repeat: no-repeat;
+      font-family: 'Raleway';
+    }
+    .clock{
+      margin: auto;
+      margin-top: 50px;
+      width: 300px;
+    }
+    .btn.btn-danger,
+    .btn.btn-success {
+      width: 40px;
+    }
+    p{
+      margin-left: 10px;
+    }
+    input{
+      width: 97%;
+      text-align: right;
+    }
+    span{
+      font-size: 30px;
+      margin: 10px 10px 0px;
+    }
+    .timer{
+      font-size:70px;
+    }
+
+  .clock.text-center
+    h1 Pomodoro Clock
+    #timer.timer 25:00
+    //http://www.w3schools.com/js/js_timing.asp
+    p
+      button#start.btn.btn-info &#9658;
+      //http://stackoverflow.com/questions/9281118/how-do-i-display-play-forward-or-solid-right-arrow-symbol-in-html
+      button#pause.btn.btn-info | | 
+      button#reset.btn.btn-info Reset
+      button#takeBreak.btn.btn-info Take Break
+      button#startWork.btn.btn-info Start Working
+    h3 Work Time
+    p
+      button#reduceWork.btn.btn-danger -
+      span#workTime 25:00
+      button#addWork.btn.btn-success +
+    h3 Break Time
+    p
+      button#reduceBreak.btn.btn-danger -
+      span#breakTime 05:00
+      button#addBreak.btn.btn-success +
+        
+      
+  script.
+    'use strict'
+    var myVar = false;
+    $('#takeBreak').hide();
+    $('#startWork').hide();
+    function myTimer() {
+      var time = $("#timer").text();
+      var arrTime = time.split(':');
+      var min = parseInt(arrTime[0]);
+      var sec = parseInt(arrTime[1]);
+      if(sec === 0 && min === 0 && $('#startWork').css('display') === 'none'){
+        pauseTimer();
+        $('#timer').addClass('animated flash infinite');
+        $('#start').hide();
+        $('#pause').hide();
+        $('#reset').hide();
+        $('#takeBreak').show();
+      } else if (sec === 0 && min === 0 && $('#startWork').css('display') !== 'none'){
+        resetTimer();
+        $('#start').show();
+        $('#pause').show();
+        $('#reset').show();
+        $('#startWork').hide();
+        return;
+      } else if(sec === 0 && min !== 0){
+        min -= 1;
+        sec = 59;
+      } else {
+        sec -= 1;
+      }
+
+      if(min < 10)
+        min = "0"+min;
+      if(sec < 10)
+        sec = "0"+sec;
+      //document.getElementById("timer").innerHTML = d.toLocaleTimeString();
+      $("#timer").text(min+":"+sec);
+      document.title = document.title.replace(/\d+:\d+/
+        , min+":"+sec);
+    }
+    function pauseTimer(){
+      console.log(myVar);
+      //https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/clearInterval
+      clearInterval(myVar);
+      myVar = false;
+      console.log(myVar);
+    }
+    function startTimer(){
+      console.log(myVar);
+      //https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval
+      if(myVar === false)
+        myVar = setInterval(myTimer, 1000);
+      console.log(myVar);
+      if(document.title.match(/\d+:\d+/) === null)
+        document.title = $("#timer").text()+' '+document.title;
+    }
+    function resetTimer(){
+      pauseTimer();
+      $("#timer").text($("#workTime").text());
+      document.title = document.title.replace(/\d+:\d+/, '');
+    }
+    $(document).ready(function(){
+      //- $("#start").click(startTimer()); 
+      //- $("#pause").click(pauseTimer());
+      //- $("#reset").click(resetTimer()); 
+      //can't just use function. it will work as sync, not asyc. 
+      //should always use callback inside click
+      $("#start").click(function(){
+        startTimer();
+      }); 
+      $("#pause").click(function(){
+        pauseTimer();
+      });
+      $("#reset").click(function(){
+        resetTimer();
+      });
+      $('#takeBreak').click(function(){
+        $("#timer").text($("#breakTime").text());
+        startTimer();
+        $('#timer').removeClass('animated flash infinite');
+        $('#takeBreak').hide();
+        $('#startWork').show();
+      });
+      $('#startWork').click(function(){
+        $("#timer").text($("#workTime").text());
+        startTimer();
+        $('#start').show();
+        $('#pause').show();
+        $('#reset').show();
+        $('#startWork').hide();
+      });
+      $("#reduceWork").click(function(){
+        var time = $("#workTime").text();
+        var arrTime = time.split(':');
+        var min = parseInt(arrTime[0]);
+        if(min !== 0)
+          min -= 1;
+        if(min < 10)
+          min = "0"+min;
+        $("#workTime").text(min+":"+arrTime[1]);
+      });
+      $("#addWork").click(function(){
+        var time = $("#workTime").text();
+        var arrTime = time.split(':');
+        var min = parseInt(arrTime[0]);
+        min += 1;
+        if(min < 10)
+          min = "0"+min;
+        $("#workTime").text(min+":"+arrTime[1]);
+      });
+      $("#reduceBreak").click(function(){
+        var time = $("#breakTime").text();
+        var arrTime = time.split(':');
+        var min = parseInt(arrTime[0]);
+        if(min !== 0)
+          min -= 1;
+        if(min < 10)
+          min = "0"+min;
+        $("#breakTime").text(min+":"+arrTime[1]);
+      });
+      $("#addBreak").click(function(){
+        var time = $("#breakTime").text();
+        var arrTime = time.split(':');
+        var min = parseInt(arrTime[0]);
+        min += 1;
+        if(min < 10)
+          min = "0"+min;
+        $("#breakTime").text(min+":"+arrTime[1]);
+      });
+    });
