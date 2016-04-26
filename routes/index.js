@@ -34,4 +34,8 @@ router.get('/pomodoro', function(req, res, next) {
   res.render('pomodoro', { title: 'Pomodoro Clock' });
 });
 
+router.get('/tictactoe', function(req, res, next) {
+  res.render('tictactoe', { title: 'Tic Tac Toe' });
+});
+
 module.exports = router;

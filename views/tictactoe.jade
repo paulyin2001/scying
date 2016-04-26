@@ -1,0 +1,244 @@
+extends layout
+
+block content
+  style.
+    @import url(https://fonts.googleapis.com/css?family=Raleway:200);
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css);
+    html {
+      min-height: 100%;
+      /*http://stackoverflow.com/questions/12444774/how-to-force-html-background-to-bottom-when-page-is-smaller-than-window*/
+    }
+    body {
+      min-height: 100%;
+      background: linear-gradient(to bottom right,#350B83, #757AD8);
+      background-repeat: no-repeat;
+      font-family: 'Raleway';
+    }
+    h1{
+      color: white;
+    }
+    input{
+      width: 97%;
+      text-align: right;
+    }
+    span{
+      font-size: 30px;
+      margin: 10px 10px 0px;
+    }
+    .timer{
+      font-size:70px;
+    }
+    rect{
+      fill:white;
+      fill-opacity:0.1;
+    }
+    circle,.cross{
+      stroke-width:4;
+      stroke:yellow;
+      fill:transparent;
+    }
+    line{
+      stroke:pink;
+      stroke-width:3;
+      stroke-opacity:0.9;
+    }
+    .win{
+      stroke:red;
+      stroke-width:5;
+      stroke-dasharray:5,5;
+    }
+    #pickSymbol{
+      font-size:20px;
+    }
+
+  .text-center
+    h1 Tic Tac Toe
+    svg(width="400", height="400")
+      rect(x="0",y="0",width="400",height="400")
+      line(x1="133",y1="0",x2="133",y2="400")
+      line(x1="267",y1="0",x2="267",y2="400")
+      line(x1="0",y1="133",x2="400",y2="133")
+      line(x1="0",y1="267",x2="400",y2="267")
+
+      rect(x="0",y="0",width="133",height="133")
+      rect(x="133",y="0",width="133",height="133")
+      rect(x="267",y="0",width="133",height="133")
+      rect(x="0",y="133",width="133",height="133")
+      rect(x="133",y="133",width="133",height="133")
+      rect(x="267",y="133",width="133",height="133")
+      rect(x="0",y="267",width="133",height="133")
+      rect(x="133",y="267",width="133",height="133")
+      rect(x="267",y="267",width="133",height="133")
+
+      circle(cx="66.5",cy="66.5",r="40")
+      circle(cx="200",cy="66.5",r="40")
+      circle(cx="333.5",cy="66.5",r="40")
+
+      circle(cx="66.5",cy="200",r="40")
+      circle(cx="200",cy="200",r="40")
+      circle(cx="333.5",cy="200",r="40")
+
+      circle(cx="66.5",cy="333.5",r="40")
+      circle(cx="200",cy="333.5",r="40")
+      circle(cx="333.5",cy="333.5",r="40")
+
+      line.cross(x1="26.5",y1="26.5",x2="106.5",y2="106.5")
+      line.cross(x1="106.5",y1="26.5",x2="26.5",y2="106.5")
+      line.cross(x1="160",y1="26.5",x2="240",y2="106.5")
+      line.cross(x1="240",y1="26.5",x2="160",y2="106.5")
+      line.cross(x1="293.5",y1="26.5",x2="373.5",y2="106.5")
+      line.cross(x1="373.5",y1="26.5",x2="293.5",y2="106.5")
+
+      line.cross(x1="26.5",y1="160",x2="106.5",y2="240")
+      line.cross(x1="106.5",y1="160",x2="26.5",y2="240")
+      line.cross(x1="160",y1="160",x2="240",y2="240")
+      line.cross(x1="240",y1="160",x2="160",y2="240")
+      line.cross(x1="293.5",y1="160",x2="373.5",y2="240")
+      line.cross(x1="373.5",y1="160",x2="293.5",y2="240")
+
+      line.cross(x1="26.5",y1="293.5",x2="106.5",y2="373.5")
+      line.cross(x1="106.5",y1="293.5",x2="26.5",y2="373.5")
+      line.cross(x1="160",y1="293.5",x2="240",y2="373.5")
+      line.cross(x1="240",y1="293.5",x2="160",y2="373.5")
+      line.cross(x1="293.5",y1="293.5",x2="373.5",y2="373.5")
+      line.cross(x1="373.5",y1="293.5",x2="293.5",y2="373.5")    
+      
+      line.win(x1="10",y1="66.5",x2="390",y2="66.5")
+      line.win(x1="10",y1="200",x2="390",y2="200")
+      line.win(x1="10",y1="333.5",x2="390",y2="333.5")
+      line.win(x1="66.5",y1="10",x2="66.5",y2="390")
+      line.win(x1="200",y1="10",x2="200",y2="390")
+      line.win(x1="333.5",y1="10",x2="333.5",y2="390")
+      line.win(x1="20",y1="20",x2="380",y2="380")
+      line.win(x1="380",y1="20",x2="20",y2="380")
+    p
+      button#start.btn.btn-primary.btn-lg(type="button",data-toggle="modal",data-target="#pickSymbol") Start
+
+  #pickSymbol.modal.fade(role="dialog")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button",data-dismiss="modal") &times;
+          h4.modal-title Pick your symbol
+        .modal-body
+          p Do you want to use 
+            a#circle(data-dismiss="modal") O
+            | &nbsp;or&nbsp;
+            a#cross(data-dismiss="modal") X
+            | &nbsp;?
+  script.
+    'use strict'
+    var user, bot;
+    var winArr = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]; //8 possible lines to win
+    var botArr = [true,true,true,true,true,true,true,true,true];  //available positions for bot
+    var botDefend = 0;    //range 1-9 for defending position
+    $(document).ready(function(){
+      $('#start').click(function(){
+        resetGame();
+      });
+      $('#circle').click(function(){
+        user = 'O';
+        bot = 'X';
+      });
+      $('#cross').click(function(){
+        user = 'X';
+        bot = 'O';
+      });
+      $('svg rect').click(function(data){
+        console.log($(this).index()); //https://api.jquery.com/index/
+        var i = $(this).index();
+        markPosi(i-4,user);
+        //- $(this).hide();           //https://api.jquery.com/click/
+        if(checkWin(i-4, user)){
+          botPlay();
+        }
+      });
+    });
+    function resetGame(){
+      $('svg circle').hide();
+      $('svg .cross').hide();
+      $('svg .win').hide();
+      $('svg rect').show();
+      winArr = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
+      botArr = [true,true,true,true,true,true,true,true,true];
+      botDefend = 0;
+    }
+    function checkWin(pos, symbol){       //range from 1-9
+      winArr = winArr.map(function(arr){  //put O or X in pos
+        var i = arr.indexOf(pos);
+        if(i !== -1){
+          arr[i] = symbol;
+        }
+        var dangerPos = arr.filter(function(winP){ //check if this winning line contains two user symbols
+          return winP !== user;
+        });
+        if(dangerPos.length === 1 && dangerPos[0] !== bot)                 //1 last move to win
+          botDefend = dangerPos[0];
+
+        return arr;
+      });
+      var winIs = winArr.findIndex(function(arr){ //return a winning line number
+        var line = arr.toString();
+        if(line === 'O,O,O' || line === 'X,X,X')
+          return true;
+        else
+          return false;
+      });
+      if(winIs !== -1){
+        $('svg .win:eq('+winIs+')').show();
+        $('svg rect').hide();
+        winMessage(symbol);
+        return false;
+      } else
+        return true;
+    }
+    function botPlay(){
+      var i = parseInt(Math.floor(Math.random() * 8),10);
+      //i = botArr.indexOf(true); //idiot bot
+      if(-1 !== botArr.indexOf(true)){
+        if(botDefend !== 0){      //time to defend
+          i = botDefend-1;
+          botDefend = 0;
+        } else {
+          while(!botArr[i]){        //randomly select 1 pos
+            //debugger;
+            i = parseInt(Math.floor(Math.random() * 8),10);
+          }
+        }
+        markPosi(i+1, bot);     //position range from 1-9
+        checkWin(i+1, bot);     //start with 1 cuz winArr
+      } else {
+        winMessage(null);
+      }
+    }
+    function markPosi(i, symbol){   //range from 1-9
+      var recI = i
+      var cirI = i-1;
+      var cross1 = cirI*2, cross2 = cirI*2+1;
+      var selectCircle = $('svg circle:eq('+cirI+')');
+      var selectLine1 = $('svg .cross:eq('+cross1+')');
+      var selectLine2 = $('svg .cross:eq('+cross2+')');
+      var selectRec = $('svg rect:eq('+recI+')');
+      if(i === 0){                  //index for background rect
+        return;
+      }
+      if(symbol === 'O')
+        selectCircle.show();
+      else{
+        selectLine1.show();
+        selectLine2.show(); 
+      }
+      selectRec.hide();
+      botArr[i-1] = false;
+    }
+    function winMessage(symbol){
+      if(symbol === null){
+        $('#start').text('No one wins...');
+      } else {
+        $('#start').text(symbol+' wins!!');
+      }
+      setTimeout(function(){
+        resetGame();
+        $('#start').text('Start');
+      },3000);
+    }
