@@ -1,0 +1,397 @@
+extends layout
+
+block content
+  style.
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css);
+    @font-face {
+      font-family: myFont;
+      src: url('/fonts/digital-7.ttf');
+      /*http://www.1001fonts.com/digital-fonts.html?page=1&items=10*/
+    }
+    html {
+      min-height: 100%;
+      /*http://stackoverflow.com/questions/12444774/how-to-force-html-background-to-bottom-when-page-is-smaller-than-window*/
+    }
+    body {
+      min-height: 100%;
+      background-image: url('/images/wood.jpg');;
+      background-position: center;
+      background-size: cover;
+    }
+    h1 {
+      margin-top: 30px;
+      margin-bottom: 1px;
+    }
+    .center {
+      /*http://stackoverflow.com/questions/16758102/how-do-i-horizontally-center-an-absolute-positioned-element-inside-a-100-width*/
+      /*https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/*/
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      margin: auto;
+      width: 200px;
+      height: 200px;
+      border: 10px solid black;
+      border-radius: 100px;
+      background: gray;
+      z-index: 1;
+    }
+    .green {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      border: 10px solid black;
+      border-top-left-radius: 200px;
+      background: green;
+      position:absolute;
+      bottom:50%;
+      right:50%;
+    }
+    .red {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      border: 10px solid black;
+      border-top-right-radius: 200px;
+      background: red;
+      position:absolute;
+      bottom:50%;
+      left:50%;
+    }
+    .blue {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      border: 10px solid black;
+      border-bottom-right-radius: 200px;
+      background: blue;
+      position:absolute;
+      top:50%;
+      left:50%;
+    }
+    .yellow {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      border: 10px solid black;
+      border-bottom-left-radius: 200px;
+      background: yellow;
+      position:absolute;
+      top:50%;
+      right:50%;
+    }
+    .wrap {
+      position: relative;
+      width:100%;
+      height:500px;
+      margin-top: 50px;
+    }
+    button{
+      border-radius: 20px;
+      width:30px;
+      height:30px;
+      border: 3px solid black;
+    }
+    .count,.start,.strict{
+      display: inline-block;
+      margin-right:10px;
+      margin-left:10px;
+    }
+    label{
+      background-color: black;
+      height:40px;
+      width:40px;
+      border-radius: 5px;
+      font-size: 25pt;
+      font-family: myFont;
+      margin-bottom:0;
+      border-color: black;
+    }
+    .strict-led{
+      margin: auto;
+      margin-bottom: 5px;
+      height:7px;
+      width:7px;
+      border-radius: 100%;
+      background-color: black;
+      border: 2px solid black;
+    }
+  link(rel='stylesheet', href='/stylesheets/bootstrap-switch.min.css')
+  script(src='/javascripts/bootstrap-switch.min.js')
+  .wrap
+    .green
+    .red
+    .center.text-center
+      h1 Simon
+      .count
+        label --
+        br
+        p count
+      .start
+        button#start(type="button")
+        p start
+      .strict
+        .strict-led
+        button#strict(type="button")
+        p strict
+      input(type="checkbox",name="onOff")
+    .yellow
+    .blue
+    audio#noti1()
+      source(src="/sounds/simonSound1.mp3", type="audio/mpeg")
+    audio#noti2()
+      source(src="/sounds/simonSound2.mp3", type="audio/mpeg")
+    audio#noti3()
+      source(src="/sounds/simonSound3.mp3", type="audio/mpeg")
+    audio#noti4()
+      source(src="/sounds/simonSound4.mp3", type="audio/mpeg")
+
+  script.
+    'use strict'
+    /*
+      too many clicks will cause:
+        1. load() error: Uncaught (in promise) DOMException: The play() request was interrupted by a new load request.
+        2. remove whole div (colored buttons)
+    */
+    var botArr = [], botI=0;  //buttons bot pressed. Steps are colors
+    var userArr = [];  //buttons user pressed
+    var botClicking = true;
+    //- var srcS = "https://s3.amazonaws.com/freecodecamp/simonSound";  //need to deal with load() to dynamically update src
+    //- var srcE = ".mp3";
+    var switchOnOff = false, strictOn=false;
+    var inputTime = 2000; //if no input in 2 sec, bot play
+    var winCount = 20; //win with # of series
+    var litGreen = '#22B41E', litRed = '#FE6271', litBlue = '#2F46F5', litYellow = '#FFFD6A';
+    var audioRun, audio, audioSrc;
+    var inputTimeOut, botPlayInterval,botPlayTimeout, checkStepTimeout;
+    $(document).ready(function(){
+      $.fn.bootstrapSwitch.defaults.size = 'mini';
+      $("[name='onOff']").bootstrapSwitch();  //http://www.bootstrap-switch.org/
+      $("[name='onOff']").on('switchChange.bootstrapSwitch', function (event, state) {  //http://stackoverflow.com/questions/18830219/bootstrap-switch-checked-event
+        console.log('hi'+state+event);
+        switchOnOff = state;
+        if(state){
+          $('.count label').css('color','red');
+        }
+        else{
+          $('.count label').css('color','');
+          botArr = [];
+          userArr = [];
+          botClicking = true;
+          console.log('switch clear botPlayInterval: '+botPlayInterval);
+          console.log('switch clear botPlayTimeout: '+botPlayTimeout);
+          console.log('switch clear checkStepTimeout: '+checkStepTimeout);
+          console.log('switch clear inputTimeOut: '+inputTimeOut);
+          clearInterval(botPlayInterval);
+          clearTimeout(botPlayTimeout);
+          clearTimeout(checkStepTimeout);
+          clearTimeout(inputTimeOut);
+          strictOn = false;
+          $('.strict-led').css('background-color', 'black');
+        }
+        $('label').text('--');
+      });
+      $('#start').click(function(){
+        if(!switchOnOff)
+          return;
+        console.log('start is clicked');
+        console.log('switch clear botPlayInterval: '+botPlayInterval);
+        console.log('switch clear botPlayTimeout: '+botPlayTimeout);
+        console.log('switch clear checkStepTimeout: '+checkStepTimeout);
+        console.log('switch clear inputTimeOut: '+inputTimeOut);
+        clearInterval(botPlayInterval);
+        clearTimeout(botPlayTimeout);
+        clearTimeout(checkStepTimeout);
+        clearTimeout(inputTimeOut);
+        botArr = [];
+        addStep();
+        userArr = [];
+        botPlay();
+      });
+      $('#strict').click(function(){
+        if(!switchOnOff)
+          return;
+        console.log('strict is clicked');
+        strictOn = !strictOn;
+        if(strictOn)
+          $('.strict-led').css('background-color', 'red');
+        else
+          $('.strict-led').css('background-color', 'black');
+      });
+      //- $('.green,.red,.blue,.yellow').click(function(data){  //use press to avoid audio gap. the mp3 file itself is not a single beep
+      //-   //console.log(data.target.className);
+      //-   if(!switchOnOff)
+      //-     return;
+      //-   className = data.target.className;
+      //-   select = $(this);
+      //-   pressColor(className,select);
+      //- });
+      $('.green,.red,.blue,.yellow').mousedown(function(data){  //https://api.jquery.com/mousedown/
+        //console.log(botClicking);
+        if(botClicking)
+          return;
+        var className = data.target.className;  //will return the whole class name, not just .green
+        var select = $(this);
+        pressColor(className,select);
+        console.log('mousedown: clear inputTimeOut:'+inputTimeOut);
+        clearTimeout(inputTimeOut);
+      });
+      $('.green,.red,.blue,.yellow').mouseup(function(data){  //https://api.jquery.com/mousedown/
+        if(botClicking)
+          return;
+        var className = data.target.className;
+        var select = $(this);
+        var i;
+        console.log(botClicking);
+        releaseColor(className,select);
+        clearTimeout(inputTimeOut);
+        inputTimeOut = setTimeout(function(){
+          console.log('mouseup: set inputTimeOut:'+inputTimeOut);
+          checkSteps();
+        },inputTime);
+        userArr.push(className);
+        i = userArr.length-1;
+        if((botArr[i] !== userArr[i]) || (botArr.length === userArr.length)){
+          console.log('botArr[i] !== userArr[i]:'+ (botArr[i] !== userArr[i]));
+          console.log('botArr.length === userArr.length:'+ (botArr.length === userArr.length));
+          console.log('mouseup: clear inputTimeOut:'+inputTimeOut);
+          clearTimeout(inputTimeOut);
+          checkSteps();
+        }
+      });
+    });
+    //$('#noti1').ontimeupdate = function(){ setAudioStartEnd(); }; //jQuery won't work need to use javascript
+    //- console.log($('#noti1'));
+    //- console.log(document.getElementById("noti1"));
+    //- var audio1 = document.getElementById("noti1");
+    //- audio1.ontimeupdate = function(){ setAudioStartEnd(); };
+    //- function setAudioStartEnd(){
+    //-   console.log(audio1.currentTime);
+    //-   if(audio1.currentTime>0.4){
+    //-     audio1.currentTime=0.1;
+    //-     audio1.play();
+    //-   }
+    //- }
+    function pressColor(color,select){
+      var sound;
+      switch(color){
+        case 'green':
+          sound = 1;
+          color = litGreen;
+          break;
+        case 'red':
+          sound = 2;
+          color = litRed;
+          break;
+        case 'blue':
+          sound = 3;
+          color = litBlue;
+          break;
+        case 'yellow':
+          sound = 4;
+          color = litYellow;
+          break;
+      }
+      select.css('background-color',color);
+      //document.getElementById('noti'+sound).play();
+      audioSrc = $('#noti'+sound)[0];
+      audio = $('#noti'+sound);
+      audioSrc.play();
+      //$("source").attr("src",srcS+sound+srcE);
+      //var load = document.getElementById('noti').load();   //don't forget load. http://stackoverflow.com/questions/5235145/changing-source-on-html5-video-tag
+      //http://stackoverflow.com/questions/10105063/how-to-play-a-notification-sound-on-websites
+      //http://stackoverflow.com/questions/3716222/how-do-you-play-a-sound-on-the-web-browser
+      //https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement#Methods
+      //var play = document.getElementById('noti').play();
+      //- setTimeout(function(){  //double click a button and a button(div) is gone (comment out setTimeout) to prevent this
+      //-   select.removeClass(color+'-lit');
+      //- },500);
+    }
+    function releaseColor(color,select){
+      console.log('releaseColor:'+color);
+      select.css('background-color',color);
+      //- audioSrc.currentTime=0;   //hear glitch with this setting
+      //- audioSrc.pause();
+    }
+    function checkSteps(){
+      botClicking = true;   //don't allow user input while checking
+      $('.green,.red,.blue,.yellow').css('cursor','');
+      var strB = botArr.toString();
+      var strU = userArr.toString();
+      var count = $('label').text();
+      if(strB === strU){
+        if(winCount.toString() === count){
+          $('label').text('WIN');
+          return;
+        }
+        addStep();
+        botPlay();
+      } else {
+        if(strictOn === false){
+          $('label').text('! !');
+          checkStepTimeout = setTimeout(function(){
+            console.log('checkSteps(): set checkStepTimeout:'+checkStepTimeout);
+            $('label').text(count);
+            botPlay();
+          },2000);
+        } else {
+          $('label').text('! !');
+          checkStepTimeout = setTimeout(function(){
+            console.log('checkSteps(): set checkStepTimeout:'+checkStepTimeout);
+            botArr = [];
+            addStep();
+            botPlay();
+          },2000);
+        }
+      }
+    }
+    function botPlay(){
+      botClicking = true;
+      $('.green,.red,.blue,.yellow').css('cursor','');
+      botI = 0;
+      botPlayInterval = setInterval(function(){
+        console.log('botPlay(): set botPlayInterval:'+botPlayInterval);
+        console.log('botI:'+botI);
+        if(botI > botArr.length-1){
+          clearInterval(botPlayInterval);
+          console.log('botPlay(): clear botPlayInterval:'+botPlayInterval);
+          botClicking = false;
+          $('.green,.red,.blue,.yellow').css('cursor','pointer');
+          botI = 0;
+          inputTimeOut = setTimeout(function(){
+            console.log('botPlay(): set inputTimeOut:'+inputTimeOut);
+            checkSteps();
+          },inputTime);
+        } else {
+          clearTimeout(botPlayTimeout);
+          console.log('botPlay(): clear botPlayTimeout:'+botPlayTimeout);
+          var color = botArr[botI];
+          var select = $('.'+botArr[botI]);
+          pressColor(color,select);
+          botPlayTimeout = setTimeout(function(){
+            releaseColor(color,select);
+            console.log('botPlay(): set botPlayTimeout:'+botPlayTimeout);
+          },400);
+          botI++;
+        }
+      },800);
+      userArr = [];
+    }
+    function addStep(){
+      var i = parseInt(Math.floor(Math.random() * 3),10); //randomly assign 0-3
+      //botArr.push('yellow');
+      switch(i){
+        case 0:
+          botArr.push('green');
+          break;
+        case 1:
+          botArr.push('red');
+          break;
+        case 2:
+          botArr.push('blue');
+          break;
+        case 3:
+          botArr.push('yellow');
+          break;
+      }
+      $('label').text(botArr.length);
+    }

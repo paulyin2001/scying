@@ -1,0 +1,233 @@
+extends layout
+
+block content
+  style.
+    @import url(https://fonts.googleapis.com/css?family=Raleway:200);
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css);
+    html {
+      min-height: 100%;
+      /*http://stackoverflow.com/questions/12444774/how-to-force-html-background-to-bottom-when-page-is-smaller-than-window*/
+    }
+    body {
+      min-height: 100%;
+      background-image: url('/images/wood.jpg');;
+      background-position: center;
+      background-size: cover;
+      font-family: 'Raleway';
+    }
+    h1{
+      color: white;
+    }
+    input{
+      width: 97%;
+      text-align: right;
+    }
+    span{
+      font-size: 30px;
+      margin: 10px 10px 0px;
+    }
+    .timer{
+      font-size:70px;
+    }
+    rect{
+      fill:white;
+      fill-opacity:0.1;
+    }
+    circle,.cross{
+      stroke-width:10;
+      stroke:black;
+      fill:transparent;
+    }
+    .mid{
+      fill:black;
+    }
+    line{
+      stroke:pink;
+      stroke-width:5;
+      stroke-opacity:0.9;
+    }
+    .win{
+      stroke:red;
+      stroke-width:5;
+      stroke-dasharray:5,5;
+    }
+    #pickSymbol{
+      font-size:20px;
+    }
+
+  .text-center
+    h1 Simon Game
+    svg(width="400", height="400")
+      circle(cx="200",cy="200",r="195")
+
+      //http://stackoverflow.com/questions/17872555/multiple-lines-for-long-attribute-value-in-jade
+      //https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+      path(d="M 200 10 \
+           A 190 190, 0, 0, 0, 10 200 \
+           L 200 200 Z", fill="green")
+      path(d="M 390 200 \
+           A 190 190, 0, 0, 0, 200 10 \
+           L 200 200 Z", fill="red")
+      path(d="M 200 390 \
+           A 190 190, 0, 0, 0, 390 200 \
+           L 200 200 Z", fill="blue")
+      path(d="M 10 200 \
+           A 190 190, 0, 0, 0, 200 390 \
+           L 200 200 Z", fill="yellow")
+      circle.mid(cx="200",cy="200",r="80")
+
+      line.cross(x1="200",y1="0",x2="200",y2="400")
+      line.cross(x1="0",y1="200",x2="400",y2="200")
+      //https://css-tricks.com/look-svg-light-source-filters/
+      defs
+        filter(id="lightIt")
+          //blur effect
+          feGaussianBlur(stdDeviation="6", result="blur1")
+          //lighting effect
+          feSpecularLighting(result="spec1", in="blur1", specularExponent="60",lighting-color="#cccccc")
+            //light source effect
+            fePointLight(x="200",y="200",z="250")
+          feComposite(in="SourceGraphic",in2="spec1",operator="arithmetic",k1="0",k2="1",k3="1",k4="0")
+    p
+      button#start.btn.btn-primary.btn-lg(type="button",data-toggle="modal",data-target="#pickSymbol") Start
+    audio#noti
+      source(src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3", type="audio/mpeg")
+
+  #pickSymbol.modal.fade(role="dialog")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button",data-dismiss="modal") &times;
+          h4.modal-title Pick your symbol
+        .modal-body
+          p Do you want to use 
+            a#circle(data-dismiss="modal") O
+            | &nbsp;or&nbsp;
+            a#cross(data-dismiss="modal") X
+            | &nbsp;?
+  script.
+    'use strict'
+    var user, bot;
+    var winArr = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]; //8 possible lines to win
+    var botArr = [true,true,true,true,true,true,true,true,true];  //available positions for bot
+    var botDefend = 0;    //range 1-9 for defending position
+    $(document).ready(function(){
+      $('#start').click(function(){
+        resetGame();
+      });
+      $('#circle').click(function(){
+        user = 'O';
+        bot = 'X';
+      });
+      $('#cross').click(function(){
+        user = 'X';
+        bot = 'O';
+      });
+      $('svg path').click(function(data){
+        console.log($(this).index()); //https://api.jquery.com/index/
+        var i = $(this).index();
+        var select = $(this);
+        var sound;
+        var srcS = "https://s3.amazonaws.com/freecodecamp/simonSound";
+        var srcE = ".mp3";
+        $(this).attr("filter","url(#lightIt)");
+        $("source").attr("src",srcS+i+srcE);
+        document.getElementById('noti').load();   //don't forget load. http://stackoverflow.com/questions/5235145/changing-source-on-html5-video-tag
+        //http://stackoverflow.com/questions/10105063/how-to-play-a-notification-sound-on-websites
+        //http://stackoverflow.com/questions/3716222/how-do-you-play-a-sound-on-the-web-browser
+        //$('#noti').play();  //jQuery won't work
+        document.getElementById('noti').play();
+        setTimeout(function(){
+          select.attr("filter","");
+        },500);
+        //- $(this).hide();           //https://api.jquery.com/click/
+      });
+    });
+    function resetGame(){
+      $('svg circle').hide();
+      $('svg .cross').hide();
+      $('svg .win').hide();
+      $('svg rect').show();
+      winArr = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
+      botArr = [true,true,true,true,true,true,true,true,true];
+      botDefend = 0;
+    }
+    function checkWin(pos, symbol){       //range from 1-9
+      winArr = winArr.map(function(arr){  //put O or X in pos
+        var i = arr.indexOf(pos);
+        if(i !== -1){
+          arr[i] = symbol;
+        }
+        var dangerPos = arr.filter(function(winP){ //check if this winning line contains two user symbols
+          return winP !== user;
+        });
+        if(dangerPos.length === 1 && dangerPos[0] !== bot)                 //1 last move to win
+          botDefend = dangerPos[0];
+
+        return arr;
+      });
+      var winIs = winArr.findIndex(function(arr){ //return a winning line number
+        var line = arr.toString();
+        if(line === 'O,O,O' || line === 'X,X,X')
+          return true;
+        else
+          return false;
+      });
+      if(winIs !== -1){
+        $('svg .win:eq('+winIs+')').show();
+        $('svg rect').hide();
+        winMessage(symbol);
+        return false;
+      } else
+        return true;
+    }
+    function botPlay(){
+      var i = parseInt(Math.floor(Math.random() * 8),10);
+      //i = botArr.indexOf(true); //idiot bot
+      if(-1 !== botArr.indexOf(true)){
+        if(botDefend !== 0){      //time to defend
+          i = botDefend-1;
+          botDefend = 0;
+        } else {
+          while(!botArr[i]){        //randomly select 1 pos
+            //debugger;
+            i = parseInt(Math.floor(Math.random() * 8),10);
+          }
+        }
+        markPosi(i+1, bot);     //position range from 1-9
+        checkWin(i+1, bot);     //start with 1 cuz winArr
+      } else {
+        winMessage(null);
+      }
+    }
+    function markPosi(i, symbol){   //range from 1-9
+      var recI = i
+      var cirI = i-1;
+      var cross1 = cirI*2, cross2 = cirI*2+1;
+      var selectCircle = $('svg circle:eq('+cirI+')');
+      var selectLine1 = $('svg .cross:eq('+cross1+')');
+      var selectLine2 = $('svg .cross:eq('+cross2+')');
+      var selectRec = $('svg rect:eq('+recI+')');
+      if(i === 0){                  //index for background rect
+        return;
+      }
+      if(symbol === 'O')
+        selectCircle.show();
+      else{
+        selectLine1.show();
+        selectLine2.show(); 
+      }
+      selectRec.hide();
+      botArr[i-1] = false;
+    }
+    function winMessage(symbol){
+      if(symbol === null){
+        $('#start').text('No one wins...');
+      } else {
+        $('#start').text(symbol+' wins!!');
+      }
+      setTimeout(function(){
+        resetGame();
+        $('#start').text('Start');
+      },3000);
+    }

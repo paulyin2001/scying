@@ -38,4 +38,7 @@ router.get('/tictactoe', function(req, res, next) {
   res.render('tictactoe', { title: 'Tic Tac Toe' });
 });
 
+router.get('/simongame', function(req, res, next) {
+  res.render('simongame', { title: 'Simon Game' });
+});
 module.exports = router;
