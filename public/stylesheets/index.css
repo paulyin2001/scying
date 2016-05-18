@@ -81,8 +81,7 @@ section {
 #Projects{
 	background-color: #2c2c50;
 }
-#Projects #project1,#Projects #project2,#Projects #project3,
-#Projects #project4,#Projects #project5{
+#Projects .media{
 	animation-duration: 5s;
 }
 img {

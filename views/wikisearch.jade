@@ -49,7 +49,7 @@ block content
         $('a').remove('.wiki');
         var cb = '&callback=?'
         var wikiApi = 'https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&formatversion=2&srsearch='+input+'&srnamespace=0'+cb;
-        //resolve CROS erro with JSONP
+        //resolve CROS error with JSONP
         //reference: http://stackoverflow.com/questions/3873636/no-response-from-mediawiki-api-using-jquery
         $.getJSON(wikiApi, function(json){
           console.log(json.query.search.length);

@@ -17,11 +17,8 @@ $(document).ready(function() {
   	$('header h4').addClass('animated fadeIn');
   });
   $('#AboutMe h1').addClass('animated infinite pulse');
-  $('#Projects #project1').addClass('animated rollIn');
-  $('#Projects #project2').addClass('animated zoomInDown');
-  $('#Projects #project3').addClass('animated rollIn');
-  $('#Projects #project4').addClass('animated zoomInDown');
-  $('#Projects #project5').addClass('animated rollIn');
+  $('#Projects .media:even').addClass('animated rollIn');
+  $('#Projects .media:odd').addClass('animated zoomInDown');
   $('#Things .col-sm-2:nth-child(1)').addClass('animated infinite bounce');
   $('#Things .col-sm-2:nth-child(2)').addClass('animated infinite swing');
   $('#Things .col-sm-2:nth-child(3)').addClass('animated infinite jello');

@@ -45,43 +45,92 @@ block content
               |The app will generate random quotes and the quote can be shared via twitter. I created my own RESTful API with Express to serve quotes. The hardest bug I found is that getJSON can't pick up API after I deployed onto Heroku. The error is 'No Access-Control-Allow-Origin' where the websites should be the same origin. Then, I spend a day to understand http header, same-origin policy and Expressjs to set up API response header to resolve the issue.
           .media-right.media-middle
             a(href='/randomquote')
-              img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 1 pic')
+              img.media-object(src='/images/randomquoteThumbnail.PNG', alt='Project 1 pic')
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
         #project2.media.wow
           .media-left.media-middle
-            a(href='#')
-              img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 2 pic')
+            a(href='/weather')
+              img.media-object(src='/images/weatherThumbnail.PNG', alt='Project 2 pic')
           .media-body(style='text-align:right;')
-            h3 Project 2
+            h3 Weather
             p
-              |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              |This is my first time use other's RESTful API. The most challenging part is extracting the data I want. JSON response is like 3-level-tree. I use 
+              code $.each
+              | to iterate each object to list out the data. Also, Celsius and Fahrenheit can be converted with button-like archor element with text written in html entities. HTML geolocation is used to obtain current localtion latitude and longitude.
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
         #project3.media.wow
           .media-body
-            h3 Project 3
+            h3 Wikipedia Viewer
             p
-              |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              |The hardest bug is CROS error again. Even though Wikipedia API state that using parameter "origin" will resolve the problem, it never did. I then read through a lot of articles about this error on blogs and Stackoverflows. The best solution is using JSONP by adding 
+              code &callback=?
+              | in url. This will bypass CROS. It is not a secure standard, but it is the best solution I found so far. It also took me a long time to find a the best query to obtain both the page link and info. I tried to use API call within another API call, but failed to do so. Then, I found out the page title is counted as an unique link to the webpage. So, I didn't use second API in the end, just a single API call.
           .media-right.media-middle
-            a(href='#')
-              img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 3 pic')
+            a(href='/wikisearch')
+              img.media-object(src='/images/wikisearchThumbnail.PNG', alt='Project 3 pic')
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
         #project4.media.wow
           .media-left.media-middle
-            a(href='#')
-              img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 4 pic')
+            a(href='/twitchtv')
+              img.media-object(src='/images/twitchtvThumbnail.PNG', alt='Project 4 pic')
           .media-body(style='text-align:right;')
-            h3 Project 4
+            h3 Twitch TV API
             p
-              |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              |Make table row clickable and can open a link to streamer's channel. Learn to easily restrieve JSON data without iterating the whole data. Automatically sort the table after the API data is written into table. Show streamer account not exist if the API request is failed by use 
+              code .fail
+              | after
+              code $.getJSON
       .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
         #project5.media.wow
           .media-body
-            h3 Project 5
+            h3 Javascript Calculator
             p
-              |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              |Simple calculator. Use javascript math symbols for times and divide,
+              code \xF7
+              | and
+              cod \xD7
+              |. Create an object to parse math symbols then return a function for add, minus, etc ...
           .media-right.media-middle
-            a(href='#')
-              img.media-object(src='https://placeholdit.imgix.net/~text?txtsize=19&bg=999999&txtclr=eeeeee&txt=200%C3%97200&w=200&h=200', alt='Project 5 pic')
+            a(href='/calculator')
+              img.media-object(src='/images/calculatorThumbnail.PNG', alt='Project 5 pic')
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
+        #project6.media.wow
+          .media-left.media-middle
+            a(href='/pomodoro')
+              img.media-object(src='/images/pomodoroThumbnail.PNG', alt='Project 6 pic')
+          .media-body(style='text-align:right;')
+            h3 Pomodoro Clock
+            p
+              |The timer get myself more familiar with javascript
+              code setInterval
+              | and 
+              code clearInterval
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-2
+        #project7.media.wow
+          .media-body
+            h3 Tic Tac Toe
+            p
+              |It is my first time using SVG to draw something, such as cross, board and circle. I learned and made SVG clickalbe. The most challenging part is to check who wins the game. I create an array of 8 different winning lines. Then, the bot will check if the line is about to win to block the line.
+          .media-right.media-middle
+            a(href='/tictactoe')
+              img.media-object(src='/images/tictactoeThumbnail.PNG', alt='Project 7 pic')
+      .col-sm-10.col-sm-offset-1.col-md-6.col-md-offset-4
+        #project8.media.wow
+          .media-left.media-middle
+            a(href='/simongame')
+              img.media-object(src='/images/simongameThumbnail.PNG', alt='Project 8 pic')
+          .media-body(style='text-align:right;')
+            h3 Simon Game
+            p
+              |This is the most challenging project in freeCodeCamp front-end development certificate. The sound took me a day to try to figure out how 0.4 sec mp3 makes a countinuous beep, but it turned out that I need to modifity the mp3 file provided in order to change the sound wave. I have tried 
+              code autoplay, load(), play(), currentTime
+              |to make mp3 file shorter, but I finally dived deep into the mp3 file itself and found that the loop will always have a gap unless I recreate the mp3 file.
+              |Since the mp3 is about 0.4 sec long, it will interrupt each other if the buttons are pressed too fast. I need to add 
+              code setTimer
+              | to prevent this. Also, the bot will press the buttons in some time interval, so I used 
+              code setInterval
+              |to achieve this. But these two timing functions create many weird bugs that are hard to track and fix. It doesn't make anything easier to track down their ids, because it generates a lot of ids. After frustrating for a while and stare the screen to figure out their behaviors. Finanlly, I make sure those unused timer are cleared by adding a lot of 
+              code clearTimeout, clearInterval
 
   section#Things.container-fluid.text-center
     h1.text-primary Things I use
