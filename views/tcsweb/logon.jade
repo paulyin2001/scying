@@ -1,0 +1,60 @@
+extends logonlayout
+
+block content
+  #carousel-example-generic.carousel.slide(data-ride='carousel')
+    ol.carousel-indicators
+      li.active(data-target='#carousel-example-generic', data-slide-to='0')
+      li(data-target='#carousel-example-generic', data-slide-to='1')
+      li(data-target='#carousel-example-generic', data-slide-to='2')
+    .carousel-inner(role='listbox')
+      .item.active
+        img(src='/images/tcswebCarousel1.PNG',alt='first slide: i am very long to see my moving')
+      .item
+        img(src='/images/tcswebCarousel2.PNG',alt='second slide: i am very long to see my moving')
+      .item
+        img(src='/images/tcswebCarousel3.PNG',alt='third slide: i am very long to see my moving')
+    a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+      span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+      span.sr-only Previous
+    a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+      span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+      span.sr-only Next
+  .container-fluid
+    .row
+      .col-md-6.col-md-offset-3
+        p some recommendation system will calculate by "how many times you click", "review rating", "prime membership item" to list the items
+        .recommend-list
+          h2 Related to items you've viewed
+          a(href='products/relate1')
+            img(src='/images/tcsweb/relate1.jpg',alt='item')
+          img(src='/images/tcsweb/relate2.jpg',alt='item')
+          img(src='/images/tcsweb/relate3.jpg',alt='item')
+          img(src='/images/tcsweb/relate4.jpg',alt='item')
+          img(src='/images/tcsweb/relate5.jpg',alt='item')
+          img(src='/images/tcsweb/relate6.jpg',alt='item')
+          img(src='/images/tcsweb/relate7.jpg',alt='item') 
+        hr
+        .recommend-list  
+          h2 Inspired by your shopping trends
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+        hr
+        .recommend-list  
+          h2 This week's featured startup products
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+        hr
+        .recommend-list  
+          h2 Recommendations for you in Cell Phones & Accessories
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+          img(src='/images/thumbnail.png',alt='item')
+        hr
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

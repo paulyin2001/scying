@@ -1,0 +1,63 @@
+extends logonlayout
+
+block content
+  .container
+    .row
+      .col-md-8.col-md-offset-2
+        h1.text-center Your Payment Info
+        hr
+        form(action='' onsubmit='')
+          .row
+            .col-md-6
+              .form-group
+                label Credit Card Number
+                input.form-control(type="text" placeholder="Card Number")
+            .col-md-3
+              .form-group
+                label Expiration
+                input.form-control(type="text" placeholder="MM/YYYY")
+            .col-md-3
+              .form-group
+                label Security Code (CVV)
+                input.form-control(type="text" placeholder="123")
+          hr
+          .row
+            .col-md-6
+              .form-group
+                label First Name
+                input.form-control(type="text" placeholder="First Name")
+            .col-md-6
+              .form-group
+                label Last Name
+                input.form-control(type="text" placeholder="Last Name")
+          .row
+            .col-md-12
+              .form-group
+                label Billing Address
+                input.form-control(type="text" placeholder="Address 1")
+              .form-group
+                input.form-control(type="text" placeholder="Address 2")
+          .row
+            .col-md-6
+              .form-group
+                input.form-control(type="text" placeholder="City")
+            .col-md-6
+              .form-group
+                input.form-control(type="text" placeholder="State")
+          .row
+            .col-md-5
+              .form-group
+                input.form-control(type="text" placeholder="Zip Code")
+            .col-md-7
+              .form-group
+                input.form-control(type="text" placeholder="Country")
+          .form-group
+            textarea.form-control(rows="2" placeholder="Additional Information")
+          hr
+          .text-center
+            button.btn.btn-default(type="submit" style="width: 20%;") Cancel
+            &nbsp;&nbsp;&nbsp;
+            button.btn.btn-info(type="submit" style="width: 20%;") Save
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

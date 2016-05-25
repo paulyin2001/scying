@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title
+
+    link(rel='stylesheet', href='/bootstrap-3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/tcs.css')
+    script(src='/javascripts/jquery-1.12.1.min.js')
+    script(src='/bootstrap-3.3.6/js/bootstrap.min.js')
+    script(src='/javascripts/tcs.js')
+  body
+    .login
+      h1.text-center TCS Web Services
+      .warningEmail
+        h1 &#9888;
+          span There was a problem
+        p Your email was not valid. Please try again.
+      form#loginForm(action='logon' onsubmit='return validateEmail()')
+        .form-group
+          label(for="exampleInputEmail1") Email address
+          input.form-control(type="email" id="loginEmail" placeholder="Email")
+        .form-group
+          label(for="exampleInputPassword1") Password
+          input.form-control(type="password" id="loginPassword" placeholder="Password")
+        button.btn.btn-defaul(type="submit" style="width: 100%; background: linear-gradient(#F7FA9E, #D2E81B);") Login
+  //add javascript validation

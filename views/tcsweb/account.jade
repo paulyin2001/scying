@@ -1,0 +1,47 @@
+extends logonlayout
+
+block content
+  .container
+    .row
+      .col-md-8.col-md-offset-2
+        h1 Your Account
+        .accountBox
+          .row
+            .col-md-4
+              p
+                b.bigGreenText Orders
+              p 
+                b View & Modify Recent Orders
+            .col-md-4
+              b View, Track or Cancel an Order
+              form(action='account/orders')
+                button.btn.btn-default.bigYellowButton(type='submit') Your Orders
+            .col-md-4
+              b Search Orders
+              input.form-control
+              button.btn.btn-default Go
+        .accountBox
+          .row
+            .col-md-4
+              p
+                b.bigGreenText Settings
+              p 
+                b Password, Prime & E-mail
+            .col-md-4
+              b Account Setting
+            .col-md-4
+              b Address Book
+        .accountBox
+          .row
+            .col-md-4
+              p
+                b.bigGreenText Message Center
+              p 
+                b View and manage messages received
+            .col-md-4
+              b Your Messages
+            .col-md-4
+              b Notification Settings
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

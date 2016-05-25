@@ -1,0 +1,23 @@
+extends logonlayout
+
+block content
+  .container
+    .row
+      .col-md-8.col-md-offset-2
+        h1.text-center Need Help?
+        .warningEmail
+          h1 &#9888;
+            span There was a problem
+          p Your email was not valid. Please try again.
+        form(action='' onsubmit='')
+          .form-group
+            label Subject
+            input.form-control(type="text" id="subject" placeholder="Give your ticket a name.")
+          .form-group
+            label Description
+            textarea.form-control(rows="10" id="description" placeholder="Tell us everything.")
+          .text-center
+            button.btn.btn-info(type="submit" style="width: 20%;") Raise a Ticket
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

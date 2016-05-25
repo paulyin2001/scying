@@ -41,4 +41,5 @@ router.get('/tictactoe', function(req, res, next) {
 router.get('/simongame', function(req, res, next) {
   res.render('simongame', { title: 'Simon Game' });
 });
+
 module.exports = router;

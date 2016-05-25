@@ -1,0 +1,65 @@
+extends logonlayout
+
+block content
+  .container
+    .row
+      .col-md-8.col-md-offset-2
+        h1 Order Details
+        p Ordered on May 14, 2016 | Order# 114-5387812-2055414
+        .orderBox
+          .row
+            .col-md-4
+              b Shipping Address
+              p Shih-Chun Yin
+              p 13011 Hampton Club Rd.
+              p 111
+              p San Francisco, CA 99999
+              p United States
+            .col-md-4
+              p
+                b Payment Method
+              p 
+                img(src='/images/tcsweb/visa.gif',alt='visa')
+                | **** 9999
+            .col-md-4
+              table(width='100%')
+                tr
+                  th 
+                    b Order Summary
+                  th
+                tr
+                  td Item(s) Subtotal:
+                  td $21.97
+                tr
+                  td Shipping & Handling:
+                  td $5.37
+                tr
+                  td Total before tax:
+                  td $27.34
+                tr
+                  td Estimated tax to be:
+                  td $0.00
+                tr
+                  td collected:
+                  td
+                tr
+                  td 
+                    b Grand Total:
+                  td
+                    b $27.34
+        .orderBox
+          .row
+            .col-md-8
+              p
+                b Arriving tomorrow by 8pm
+              p 
+                b Out for Delivery
+            .col-md-4
+              form(action='orderdetail/trackpackage')
+                button.btn.btn-default.bigYellowButton(type='submit') Track Package
+              br
+              button.btn.btn-default Return or replace items
+              button.btn.btn-default Leave seller feedback
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

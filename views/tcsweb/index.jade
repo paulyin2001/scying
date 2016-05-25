@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/tcs.css')
+  #carousel-example-generic.carousel.slide(data-ride='carousel')
+    ol.carousel-indicators
+      li.active(data-target='#carousel-example-generic', data-slide-to='0')
+      li(data-target='#carousel-example-generic', data-slide-to='1')
+      li(data-target='#carousel-example-generic', data-slide-to='2')
+    .carousel-inner(role='listbox')
+      .item.active
+        img(src='/images/tcswebCarousel1.PNG',alt='first slide: i am very long to see my moving')
+      .item
+        img(src='/images/tcswebCarousel2.PNG',alt='second slide: i am very long to see my moving')
+      .item
+        img(src='/images/tcswebCarousel3.PNG',alt='third slide: i am very long to see my moving')
+    a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
+      span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+      span.sr-only Previous
+    a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
+      span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+      span.sr-only Next
+
+  footer.container-fluid.text-center
+    p Shih-Chun Yin ©2016

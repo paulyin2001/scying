@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title
+    link(rel='stylesheet', href='/bootstrap-3.3.6/css/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/tcs.css')
+    script(src='/javascripts/jquery-1.12.1.min.js')
+    script(src='/bootstrap-3.3.6/js/bootstrap.min.js')
+    script(src='/javascripts/tcs.js')
+  body.bg2
+    nav#topNav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.page-scroll.navbar-brand(href='/tcsweb')
+            | SCshop
+        #bs-navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li: a.page-scroll(href='#AboutMe') Departments
+          ul.nav.navbar-nav.navbar-right
+            li: a.page-scroll(href='/tcsweb/account') Account
+    block content

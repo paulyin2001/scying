@@ -11,6 +11,7 @@ var routes = require('./routes/index');
 var routesApi = require('./api/routes/index');  //tell app that we are adding more routes to look out for
 var routesBootstrap = require('./routes/bootstrap');
 var users = require('./routes/users');
+var routesTcs = require('./routes/tcs');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/bootstrap', routesBootstrap);
 app.use('/api', routesApi);
+app.use('/tcsweb', routesTcs);
 
 //server static files under public folder
 app.use(express.static('public'));
